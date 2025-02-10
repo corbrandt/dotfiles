@@ -1,0 +1,20 @@
+# QUERIES
+"query:📰 News:tags # \"news\""
+"query:🖥️ Blogs:tags # \"blogs\""
+"query:💻 Tech:tags # \"it\""
+
+# NEWS
+https://www.spiegel.de/schlagzeilen/tops/index.rss ! "~Spiegel Online" news
+https://taz.de/Themen-des-Tages/!p15;rss/ ! "~taz" news
+https://www.deutschlandfunknova.de/feeds/index ! "Deutschlandfunk Nova" news
+
+# BLOGS
+https://www.telepolis.de/news-atom.xml ! "~Telepolis" blogs
+https://www.volksverpetzer.de/feed ! "~Volksverpetzer" blogs
+https://www.nachdenkseiten.de/?feed=rss2 ! "~NachDenkSeiten" blogs
+
+# IT
+https://www.kuketz-blog.de/category/artikel/feed/ ! "~Kuketz Blog" tech
+https://tarnkappe.info/feed/ ! "~Tarnappe.info" it
+https://itsfoss.com/rss/ ! "~It's FOSS" "linux" linux
+https://www.omglinux.com/feed/ ! "~OMG! Linux" linux

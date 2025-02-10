@@ -1,0 +1,101 @@
+# dnf
+alias dnfupdate="sudo dnf up --refresh"
+alias dnfremove="sudo dnf autoremove"
+
+# Useful stuff
+alias h="cd ~"
+alias cd..="cd .."
+alias ..="cd .."
+alias ...="cd ../../../"
+alias ....="cd ../../../../"
+alias .....="cd ../../../../../"
+alias top="htop"
+alias c="clear"
+alias cls="clear"
+alias cp="cp -iv"
+alias cpv="rsync -ah --info=progress2"
+alias mv="mv -iv"
+alias shred="shred -uz"
+alias n="nano"
+alias v="vim"
+alias l="ls --color=auto"
+#alias l="exa -al --color=always --group-directories-first"
+alias now="date +'%T'"
+alias nowdate="date +'%d.%m.%Y'"
+
+# scripts
+alias bookmover="~/Scripts/bookmover.sh"
+
+# long listing
+alias ll="ls -la"
+
+# show hidden files
+alias l.="ls -d .* --color=auto"
+
+# colorize grep
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+
+# useful
+alias neofetch="fastfetch"
+
+# net
+alias ping="ping -c 5"
+alias fastping="ping -c 10 -s.2"
+alias aria="aria2c -c"
+alias wget="wget -c"
+
+# yt-dlp
+alias yta-aac="yt-dlp --extract-audio --audio-format aac --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s'"
+alias yta-best="yt-dlp --extract-audio --audio-format best --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s' "
+alias yta-flac="yt-dlp --extract-audio --audio-format flac --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s' "
+alias yta-m4a="yt-dlp --extract-audio --audio-format m4a --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s' "
+alias yta-mp3="yt-dlp --extract-audio --audio-format mp3 --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s' "
+alias getmp3="yt-dlp --extract-audio --audio-format mp3 --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s' "
+alias yta-opus="yt-dlp --extract-audio --audio-format opus --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s'"
+alias yta-vorbis="yt-dlp --extract-audio --audio-format vorbis --embed-metadata --embed-thumbnail -o '%(title)s.%(ext)s' "
+alias yta-wav="yt-dlp --extract-audio --audio-format wav  -o '%(title)s.%(ext)s'"
+alias ytv-best="yt-dlp -f bestvideo+bestaudio  -o '%(title)s.%(ext)s'"
+alias ytv-mp4="yt-dlp -S ext:mp4:m4a  -o '%(title)s.%(ext)s'"
+alias getvid="yt-dlp -S ext:mp4:m4a  -o '%(title)s.%(ext)s' | lolcat"
+alias getstream="yt-dlp --no-part --restrict-filenames --user-agent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36' -o '%(title)s.%(ext)s'"
+
+# docker
+dockercalibre="docker compose -f /home/cb/docker/calibre-web.yml up -d"
+
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+ else
+    for n in "$@"
+    do
+      if [ -f "$n" ] ; then
+          case "${n%,}" in
+            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
+                         tar xvf "$n"       ;;
+            *.lzma)      unlzma ./"$n"      ;;
+            *.bz2)       bunzip2 ./"$n"     ;;
+            *.cbr|*.rar)       unrar x -ad ./"$n" ;;
+            *.gz)        gunzip ./"$n"      ;;
+            *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
+            *.z)         uncompress ./"$n"  ;;
+            *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+                         7z x ./"$n"        ;;
+            *.xz)        unxz ./"$n"        ;;
+            *.exe)       cabextract ./"$n"  ;;
+            *.cpio)      cpio -id < ./"$n"  ;;
+            *.cba|*.ace)      unace x ./"$n"      ;;
+            *)
+                         echo "extract: '$n' - unknown archive method"
+                         return 1
+                         ;;
+          esac
+      else
+          echo "'$n' - file does not exist"
+          return 1
+      fi
+    done
+fi
+}

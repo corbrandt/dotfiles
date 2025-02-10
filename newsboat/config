@@ -1,0 +1,108 @@
+####  display-article-progress
+#
+# If set to yes, then a read progress (in percent) is displayed in the article
+# view. Otherwise, no read progress is displayed.
+#
+# Syntax: [yes/no]
+#
+# Default value: yes
+#
+display-article-progress yes
+
+# kill files ignore articles marked #shorts to filter out youtube shorts
+ignore-article "*" "title =~ \"#shorts$\""
+
+ignore-article "*" "title =~ \"Sponsor\""
+ignore-article "*" "title =~ \"Advertisement\""
+
+####  download-full-page
+#
+# If set to yes, then for all feed items with no content but with a link, the
+# link is downloaded and the result used as content instead. This may
+# significantly increase the download times of "empty" feeds.
+#
+# Syntax: [yes/no]
+#
+# Default value: no
+#
+download-full-page yes
+
+####  download-retries
+#
+# How many times newsbeuter shall try to successfully download a feed before
+# giving up. This is an option to improve the success of downloads on slow and
+# shaky connections such as via a TOR proxy.
+#
+# Syntax: <number retries>
+#
+# Default value: 1
+#
+download-retries 4
+
+####  auto-reload
+#
+# If enabled, all feeds will be automatically reloaded at start up and then
+# continuously after a certain time has passed (see reload-time).
+#
+# Syntax: [yes/no]
+#
+# Default value: no
+#
+auto-reload yes
+reload-threads 42
+reload-time 30
+
+browser "nohup $FIREFOX --new-tab %u &>/dev/null &"
+highlight feedlist "---.*---" green black bold
+highlight feedlist "^.*\\(0/0\\)" black black
+#feed-sort-order fisttag
+#browser nbpix
+#browser "w3m %u"
+#browser "firefox %u"
+datetime-format "%F"  # ISO 8601
+refresh-on-startup yes
+
+wrap-scroll yes
+
+# html-renderer and pager
+#pager "w3m -T text/html"
+#html-renderer "w3m"
+
+macro y set browser "mpv --force-seekable=yes --geometry=50% %u"; open-in-browser ; set browser "elinks %u"
+
+macro a set browser "mpv --no-video %u"; open-in-browser ; set browser "elinks %u"
+
+prepopulate-query-feeds yes
+show-keymap-hint no
+show-read-articles no
+show-read-feeds no
+swap-title-and-hints yes  # Like Mutt.
+# Also download ignored articles, just don't display them.  See
+# <fle:///usr/share/doc/newsboat/newsboat.html#_killfiles>.
+ignore-mode "display"
+
+articlelist-format "%4i %f %D  %?T?|%-17T| ?%t"
+
+highlight feedlist    "^  *[0-9]+  *N  "                    magenta  default
+highlight articlelist "^  *[0-9]+  *N  "                    magenta  default
+
+highlight article     "(^Feed:.*|^Title:.*|^Author:.*)"     red      default
+highlight article     "(^Link:.*|^Date:.*)"                 white    default
+highlight article     "^Podcast Download URL:.*"            cyan     default
+highlight article     "^Links:"                             magenta  black    underline
+highlight article     "https?://[^ ]+"                      green    default
+highlight article     "^(Title):.*$"                        blue     default
+highlight article     "\\[[0-9][0-9]*\\]"                   magenta  default  bold
+highlight article     "\\[image\\ [0-9]+\\]"                green    default  bold
+highlight article     "\\[embedded flash: [0-9][0-9]*\\]"   green    default  bold
+highlight article     ":.*\\(link\\)$"                      cyan     default
+highlight article     ":.*\\(image\\)$"                     blue     default
+highlight article     ":.*\\(embedded flash\\)$"            magenta  default
+
+color background                                            default   default
+color listnormal                                            default   default
+color listfocus                                             magenta   default
+color info                                                  blue      black
+color article                                               default   default
+color listnormal_unread                                     white     default
+color listfocus_unread                                      color255  cyan
